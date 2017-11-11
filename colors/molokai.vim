@@ -4,7 +4,7 @@
 " Modified by Kijjakarn Praditukrit
 "
 " Note: Based on the monokai theme for textmate
-" by Wimer Hazenberg and its darker variant 
+" by Wimer Hazenberg and its darker variant
 " by Hamish Stuart Macpherson
 "
 
@@ -81,7 +81,7 @@ hi Search          guifg=#FFFFFF guibg=#455354
 hi SignColumn      guifg=#A6E22E guibg=#232526
 hi SpecialChar     guifg=#F92672               gui=bold
 hi SpecialComment  guifg=#7E8E91               gui=bold
-hi Special         guifg=#66D9EF guibg=bg      gui=italic
+hi Special         guifg=#5FAFFF guibg=bg      gui=italic
 if has("spell")
     hi SpellBad    guisp=#FF0000 gui=undercurl
     hi SpellCap    guisp=#7070F0 gui=undercurl
@@ -92,7 +92,7 @@ hi Statement       guifg=#F92672               gui=bold
 hi StatusLine      guifg=#455354 guibg=fg
 hi StatusLineNC    guifg=#808080 guibg=#080808
 hi StorageClass    guifg=#FD971F               gui=italic
-hi Structure       guifg=#66D9EF               gui=italic
+hi Structure       guifg=#5FAFFF               gui=italic
 hi Tag             guifg=#F92672               gui=italic
 hi Title           guifg=#ef5939
 hi Todo            guifg=#FFFFFF guibg=bg      gui=bold
@@ -146,7 +146,7 @@ if &t_Co > 255
    hi Boolean         ctermfg=135
    hi Character       ctermfg=144
    hi Number          ctermfg=135
-   hi String          ctermfg=144
+   hi String          ctermfg=185
    hi Conditional     ctermfg=161               cterm=bold
    hi Constant        ctermfg=135               cterm=bold
    hi Cursor          ctermfg=16  ctermbg=253
@@ -197,10 +197,10 @@ if &t_Co > 255
    hi SignColumn      ctermfg=112 ctermbg=235
    hi SpecialChar     ctermfg=161               cterm=bold
    hi SpecialComment  ctermfg=245               cterm=bold
-   hi Special         ctermfg=81 
+   hi Special         ctermfg=68
    if has("spell")
-       hi SpellBad                ctermbg=52   
-       hi SpellCap                ctermbg=17   
+       hi SpellBad                ctermbg=52
+       hi SpellCap                ctermbg=17
        hi SpellLocal              ctermbg=17
        hi SpellRare  ctermfg=none ctermbg=none  cterm=reverse
    endif
@@ -208,7 +208,7 @@ if &t_Co > 255
    hi StatusLine      ctermfg=238 ctermbg=253
    hi StatusLineNC    ctermfg=244 ctermbg=232
    hi StorageClass    ctermfg=208
-   hi Structure       ctermfg=81                
+   hi Structure       ctermfg=68
    hi Tag             ctermfg=161
    hi Title           ctermfg=166
    hi Todo            ctermfg=231 ctermbg=232   cterm=bold
@@ -230,7 +230,7 @@ if &t_Co > 255
    hi NonText         ctermfg=59
 
    hi SpecialKey      ctermfg=59
-   
+
    if exists("g:rehash256") && g:rehash256 == 1
        hi Normal       ctermfg=252 ctermbg=234
        hi CursorLine               ctermbg=236   cterm=none
@@ -257,7 +257,7 @@ if &t_Co > 255
        hi PreCondit       ctermfg=154               cterm=bold
        hi PreProc         ctermfg=154
        hi Repeat          ctermfg=197               cterm=bold
-       
+
        hi Statement       ctermfg=197               cterm=bold
        hi Tag             ctermfg=197
        hi Title           ctermfg=203

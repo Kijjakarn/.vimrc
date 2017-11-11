@@ -13,6 +13,7 @@ syn keyword cTodo contained     TODO FIXME XXX
 syn keyword cBoolean            TRUE FALSE
 syn keyword cKeyword            typedef
 syn keyword cConstant           NULL
+syn keyword cStructure          struct union enum
 
 syn keyword cType  int long short char void
 syn keyword cType  signed unsigned float double
@@ -67,10 +68,6 @@ syn match cDefine            "#\(define\|undef\)"
 syn match cDefinition        "#\(define\|undef\)\s\+\w*\s\+"
     \ contains=cDefine
 
-syn match cStructure         "\<\(struct\|union\|enum\)\>"
-syn match cDeclaration       "\<\(struct\|union\|enum\)\>\s\+\w*"
-    \ contains=cStructure
-
 hi link cInclude                Include
 hi link cPreProc                PreProc
 hi link cPreCondit              PreCondit
@@ -83,7 +80,6 @@ hi link cRepeat                 Repeat
 hi link cFunction               Function
 hi link cDefine                 Define
 hi link cDefinition             Constant
-hi link cDeclaration            Function
 hi link cComment                Comment
 hi link cBlockComment           Comment
 hi link cOperator               Operator

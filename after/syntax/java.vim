@@ -8,16 +8,18 @@ syn keyword javaConditional        if else switch
 syn keyword javaRepeat             while for do
 syn keyword javaOperator           sizeof instanceof extends implements
 syn keyword javaTodo contained     TODO FIXME XXX
-syn keyword javaIdentifier         this
-syn keyword javaKeyword            new delete friend using
+syn keyword javaIdentifier         this super
+syn keyword javaKeyword            new
 syn keyword javaKeyword            inline virtual explicit export
 syn keyword javaException          throws throw try catch
 syn keyword javaBoolean            true false
 syn keyword javaInclude            import package
 syn keyword javaConstant           null
+syn keyword javaStructure          class enum interface
 
 syn keyword javaType        int long float double short char void byte boolean
-syn keyword javaPrefix      static final private public protected abstract
+syn keyword javaAccess      private public protected
+syn keyword javaPrefix      static final abstract
 
 syn match javaOperator          "[:;,.!=$#]"
 syn match javaOperator          "[+*/%-]"
@@ -48,10 +50,6 @@ syn region javaParentheses matchgroup=javaParenthesis
     \ contains=ALLBUT,javaParenthesis,javaAngleBracket
     \ start="(" end=")"
 
-syn match javaStructure   "\<\(class\|enum\|interface\)\>"
-syn match javaDeclaration "\<\(class\|enum\|interface\)\>\s\+\w*"
-    \ contains=javaStructure
-
 syn match javaType              "\<\u\w*\>"
 syn match javaType              "\<\w*_t\>"
 syn match javaConstant          "\<\(_\|\u\|\d\)\{2,}\>"
@@ -60,6 +58,7 @@ syn match javaFloat             "\<\d\+\(\.\d\+\)\?\(e[+-]\?\d\+\>\)\?"
 syn match javaNumber            "\<0x\x\+\(\.\x\+\)\?\(p[+-]\?\x\+\>\)\?"
 
 hi link javaInclude                Include
+hi link javaAccess                 StorageClass
 hi link javaPrefix                 StorageClass
 hi link javaKeyword                Keyword
 hi link javaControlTransfer        Keyword
@@ -77,7 +76,6 @@ hi link javaString                 String
 hi link javaChar                   String
 hi link javaConstant               Constant
 hi link javaStructure              Structure
-hi link javaDeclaration            Function
 hi link javaSpecialChar            SpecialChar
 hi link javaParenthesis            Brace
 hi link javaAngleBracket           Brace

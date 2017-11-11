@@ -14,7 +14,7 @@ syn keyword pythonLabel           in
 syn keyword pythonStorageClass    global nonlocal
 syn keyword pythonInclude         import
 syn keyword pythonKeyword         is as from with del assert
-syn keyword pythonIdentifier      _
+syn keyword pythonIdentifier      _ self
 syn keyword pythonPrint           print
 
 syn match pythonOperator          "[:;,.!=$]"
@@ -38,6 +38,7 @@ syn region pythonString contains=pythonSpecialChar start=/"/ skip=/\\./ end=/"/ 
 syn region pythonChar   contains=pythonSpecialChar start=/'/ skip=/''/  end=/'/ oneline
 
 syn region pythonDocstring start='"""' end='"""'
+syn region pythonDocstring start="'''" end="'''"
 
 hi link pythonBoolean            Boolean
 hi link pythonConstant           Constant

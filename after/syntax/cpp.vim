@@ -19,6 +19,7 @@ syn keyword cppNumber          NPOS
 syn keyword cppBoolean         true false
 syn keyword cppStructure       namespace
 syn keyword cppConstant        nullptr
+syn keyword cppStructure       class typename
 
 syn match cppTemplateOperator  "[=,*]"
 
@@ -39,10 +40,6 @@ syn match cppClassScope        "\w\+\ze::\w\+" contains=cppDoubleColon
 syn region cppParentheses matchgroup=cParenthesis
     \ contains=ALLBUT,cParenthesis,cppAngleBracket
     \ start="(" end=")"
-
-syn match cppStructure   "\<\(class\|typename\)\>"
-syn match cppDeclaration "\<\(class\|typename\)\>\s\+\w*\(::\)\?\w*"
-    \ contains=cppStructure
 
 syn match cppCast              "\<\w\+_cast\s*\ze<"
 
@@ -228,7 +225,7 @@ syn keyword cppSTLIterator_tag random_access_iterator_tag
 
 hi link cppKeyword              Keyword
 hi link cppCast                 Statement
-hi link cppAccess               Statement
+hi link cppAccess               StorageClass
 hi link cppSTLType              Type
 hi link cppSTLIterator          Type
 hi link cppType                 Type
@@ -240,7 +237,6 @@ hi link cppStructure            Structure
 hi link cppNumber               Number
 hi link cppBoolean              Boolean
 hi link cppFunction             Function
-hi link cppDeclaration          Function
 hi link cppAngleBracket         Brace
 hi link cppIdentifier           Identifier
 hi link cppDoubleColon          Type

@@ -2,25 +2,27 @@ if exists("b:current_syntax")
     finish
 endif
 
-syn keyword swiftKeyword            inout defer
-syn keyword swiftKeyword            typealias import associatedtype
-syn keyword swiftKeyword            get set didSet willSet as is
-syn keyword swiftKeyword            public private internal operator
+syn keyword swiftKeyword            defer
+syn keyword swiftImport             import
+syn keyword swiftKeyword            get set didSet willSet as is operator
 syn keyword swiftFunction           deinit
 syn keyword swiftControlTransfer    continue break fallthrough return throw
 syn keyword swiftException          try catch do throws
+syn keyword swiftAccess             public private internal
 syn keyword swiftPrefix             override mutating indirect static lazy final
 syn keyword swiftPrefix             convenience required infix prefix postfix
-syn keyword swiftPrefix             weak unowned dynamic
+syn keyword swiftPrefix             weak unowned dynamic inout
 syn keyword swiftIdentifier         newValue oldValue rawValue error
 syn keyword swiftIdentifier         self super
 syn keyword swiftIdentifier         _
 syn keyword swiftSpecial            var let func precedencegroup
+syn keyword swiftSpecial            typealias associatedtype
 syn keyword swiftLabel              in case default where
 syn keyword swiftConditional        if else guard switch
 syn keyword swiftRepeat             for while repeat
 syn keyword swiftBoolean            true false
 syn keyword swiftConstant           nil
+syn keyword swiftStructure          class struct enum protocol extension
 
 syn match swiftSpecial              "@\w*\>\((\w*)\)\?"
 syn match swiftOperator             "[:;,.=$#]"
@@ -54,10 +56,6 @@ syn region swiftParentheses matchgroup=swiftParenthesis
     \ contains=ALLBUT,swiftParenthesis,swiftAngleBracket
     \ start="(" end=")"
 
-syn match swiftStructure   "\<\(class\|struct\|enum\|protocol\|extension\)\>"
-syn match swiftDeclaration "\<\(class\|struct\|enum\|protocol\|extension\)\>\s\+\w*"
-    \ contains=swiftStructure
-
 syn match swiftType                 "\<\u\w*\>"
 syn match swiftConstant             "\<\(_\|\u\|\d\)\{2,}\>"
 
@@ -66,10 +64,9 @@ syn match swiftFloat  "\<0x\(\x\|_\)\+\(\.\(\x\|_\)\+\)\?\(p[+-]\?\(\x\|_\)\+\>\
 syn match swiftNumber "\<0o\(\o\|_\)\+\>"
 syn match swiftNumber "\<0b[_01]\+\>"
 
-syn match swiftSpecial "class func"
-
 hi link swiftTest                    Number
 hi link swiftKeyword                 Keyword
+hi link swiftImport                  Include
 hi link swiftControlTransfer         Keyword
 hi link swiftLabel                   Label
 hi link swiftType                    Type
@@ -78,7 +75,6 @@ hi link swiftConditional             Conditional
 hi link swiftRepeat                  Repeat
 hi link swiftFunction                Function
 hi link swiftGenericFunction         Function
-hi link swiftDeclaration             Function
 hi link swiftComment                 Comment
 hi link swiftBlockComment            Comment
 hi link swiftOperator                Operator
@@ -89,6 +85,7 @@ hi link swiftStringLiteral           String
 hi link swiftConstant                Constant
 hi link swiftStructure               Structure
 hi link swiftIdentifier              Identifier
+hi link swiftAccess                  StorageClass
 hi link swiftPrefix                  StorageClass
 hi link swiftSpecialChar             SpecialChar
 hi link swiftException               Exception

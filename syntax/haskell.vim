@@ -2,16 +2,18 @@ if exists("b:current_syntax")
     finish
 endif
 
-syn keyword haskellKeyword    if then else case let in deriving do otherwise of
+syn keyword haskellKeyword    if then else case deriving do otherwise of
 syn keyword haskellSpecial    where
+syn keyword haskellDeclare    data type newtype instance class module let in
+syn keyword haskellDeclare    infix infixr infixl
 syn keyword haskellIdentifier _
-syn keyword haskellBegin      data newtype type import module main qualified as
+syn keyword haskellBegin      import main qualified as hiding
 
 syn match haskellType        "\<\u\w*\>"
 
-syn match haskellOperator    "[:;,.=]"
+syn match haskellOperator    "[:;,.=~]"
 syn match haskellOperator    "[+*/%><\\-]"
-syn match haskellOperator    "&\||\|`\|\$\|@"
+syn match haskellOperator    "&\||\|`\|\$\|@\|?\|#\|!"
 syn match haskellBrace       "[][)(}{]"
 
 syn match haskellFloat       "\<\d\+\(\.\d*\)\?\([eE][+-]\?\d\+\>\)\?"
@@ -20,6 +22,7 @@ syn match haskellSpecialChar "\\." contained
 
 syn region haskellString contains=haskellSpecialChar start=/"/ skip=/\\./ end=/"/ oneline
 syn region haskellInfix                              start=/`/            end=/`/ oneline
+" syn region haskellInfixType                          start=/`\u/          end=/`/ oneline
 
 syn match haskellChar contains=haskellSpecialChar "'\(\\.\|.\|\\x\x*\)'"
 
@@ -38,9 +41,11 @@ hi link haskellHex          Number
 hi link haskellString       String
 hi link haskellChar         String
 hi link haskellSpecial      Special
+hi link haskellDeclare      Structure
 hi link haskellBegin        Include
 hi link haskellSpecialChar  SpecialChar
 hi link haskellComment      Comment
 hi link haskellBlockComment Comment
+" hi link haskellInfixType    Type
 
 let b:current_syntax = "haskell"

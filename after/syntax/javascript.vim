@@ -6,19 +6,20 @@ syn keyword javaScriptControlTransfer    goto break return continue
 syn keyword javaScriptLabel              case default
 syn keyword javaScriptConditional        if else switch
 syn keyword javaScriptRepeat             while for do finally
-syn keyword javaScriptOperator           sizeof instanceof extends implements super with
+syn keyword javaScriptOperator           sizeof instanceof extends implements super with typeof
 syn keyword javaScriptTodo contained     TODO FIXME XXX
 syn keyword javaScriptIdentifier         this
-syn keyword javaScriptKeyword            new delete yield debugger typeof
+syn keyword javaScriptKeyword            new delete yield debugger await
+syn keyword javaScriptPrefix             async
 syn keyword javaScriptKeyword            inline virtual explicit export
 syn keyword javaScriptException          throws throw try catch
 syn keyword javaScriptBoolean            true false
 syn keyword javaScriptInclude            import package
-syn keyword javaScriptSpecial            var function
-syn keyword javaScriptConstant           null
+syn keyword javaScriptSpecial            const var let function
+syn keyword javaScriptConstant           null undefined NaN
 
 syn keyword javaScriptType        int long float double short char void byte boolean
-syn keyword javaScriptPrefix      static final private public protected abstract const volatile
+syn keyword javaScriptPrefix      static final private public protected abstract volatile
 
 syn match javaScriptOperator          "[:;,.!=$#]"
 syn match javaScriptOperator          "[+*/%-]"
@@ -41,13 +42,9 @@ syn match  javaScriptFunction         "\w\+\s*\n\?\s*\ze("
 syn region javaScriptParentheses matchgroup=javaScriptParenthesis contains=ALLBUT,javaScriptParenthesis
     \ start="(" end=")"
 
-syn region javaScriptParentheses matchgroup=javaParenthesis
+syn region javaScriptParentheses matchgroup=javaScriptParenthesis
     \ contains=ALLBUT,javaScriptParenthesis
     \ start="(" end=")"
-
-syn match javaScriptStructure   "\<\(class\|enum\|interface\)\>"
-syn match javaScriptDeclaration "\<\(class\|enum\|interface\)\>\s\+\w*"
-    \ contains=javaScriptStructure
 
 syn match javaScriptType              "\<\u\w*\>"
 syn match javaScriptType              "\<\w*_t\>"
@@ -73,8 +70,6 @@ hi link javaScriptFloat                  Float
 hi link javaScriptString                 String
 hi link javaScriptChar                   String
 hi link javaScriptConstant               Constant
-hi link javaScriptStructure              Structure
-hi link javaScriptDeclaration            Function
 hi link javaScriptSpecialChar            SpecialChar
 hi link javaScriptParenthesis            Brace
 hi link javaScriptBrace                  Brace
