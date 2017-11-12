@@ -10,9 +10,10 @@ function! Align(c) range
     " splitted lines into `lines`
     let positions = []
     for i in range(a:firstline, a:lastline)
-        let line     = split(getline(i), '\zs')
-        let position = index(line, a:c, position_start)
-        call add(lines, line)
+        let line = getline(i)
+        let line_chars = split(line, '\zs')
+        let position = stridx(line, a:c, position_start)
+        call add(lines, split(line, '\zs'))
         call add(positions, position)
     endfor
 
