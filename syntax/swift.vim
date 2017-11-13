@@ -32,8 +32,8 @@ syn match swiftOperator             "[+*/%-]"
 syn match swiftOperator             "[&|^~]"
 syn match swiftOperator             "?"
 syn match swiftOperator             "!"
-syn match swiftOperator             "\W[<>]"
-syn match swiftOperator             "[<>]\W"
+syn match swiftOperator             "\W[<>]" contains=swiftOperator
+syn match swiftOperator             "[<>]\W" contains=swiftOperator
 syn match swiftBrace                "[][}{><]"
 syn match swiftParenthesis          "[()]"
 syn match swiftSpecialChar          "\\." contained
@@ -42,7 +42,7 @@ syn region swiftStringLiteral oneline start=/'/ skip=/''/ end=/'/
 syn region swiftString        oneline start=/"/ skip=/\\./ end=/"/
     \ contains=swiftStringExpand,swiftSpecialChar
 syn region swiftStringExpand  oneline matchgroup=Operator start="\\(" end=")"
-    \ contains=ALLBUT,swiftAngleBracket contained containedin=swiftString
+    \ contains=ALL contained containedin=swiftString
 
 syn match  swiftComment      "\v//.*$"
 syn region swiftBlockComment start="\/\*" end="\*\/"
@@ -53,7 +53,7 @@ syn match swiftGenericFunction "\w\+\(\n\?\s*\)\?<\w\_.\{-}>\n\?\s*\ze("
 syn match swiftFunction        "\w\+\s*[?!]\?\n\?\s*\ze(" contains=swiftOperator
 
 syn region swiftParentheses matchgroup=swiftParenthesis
-    \ contains=ALLBUT,swiftParenthesis,swiftAngleBracket
+    \ contains=ALLBUT,swiftParenthesis
     \ start="(" end=")"
 
 syn match swiftType                 "\<\u\w*\>"
@@ -90,7 +90,6 @@ hi link swiftPrefix                  StorageClass
 hi link swiftSpecialChar             SpecialChar
 hi link swiftException               Exception
 hi link swiftBoolean                 Boolean
-hi link swiftAngleBracket            Brace
 hi link swiftParenthesis             Brace
 hi link swiftBrace                   Brace
 
