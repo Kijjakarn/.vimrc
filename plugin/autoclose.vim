@@ -1,22 +1,6 @@
-inoremap <silent> <esc> <esc>:call <SID>ClearOpenedStack()<cr>
-inoremap <c-j> <c-o>:call <SID>ControlJToEscape()<cr>
-inoremap " "<c-o>:call <SID>DoubleQuote()<cr>
-inoremap [<esc> [<esc>
-inoremap [ [<c-o>:call <SID>OpenBracket()<cr>
-inoremap ] <c-o>:call <SID>CloseBracket()<cr>
-inoremap [<bs> <nop>
-inoremap [<cr> [<cr>]<esc>O
-inoremap {<esc> {<esc>
-inoremap { {<c-o>:call <SID>OpenBrace()<cr>
-inoremap } <c-o>:call <SID>CloseBrace()<cr>
-inoremap {<bs> <nop>
-inoremap {<cr> {<cr>}<esc>O
-inoremap {<space> {<space><space>}<esc><left>i
-inoremap (<esc> (<esc>
-inoremap ( (<c-o>:call <SID>OpenParenthesis()<cr>
-inoremap ) <c-o>:call <SID>CloseParenthesis()<cr>
-inoremap (<bs> <nop>
-inoremap (<cr> (<cr>)<esc>O
+nnoremap <c-v> :call <SID>UnmapAll()<cr><c-v>
+vnoremap <silent> <esc> <esc>:call <SID>MapAll()<cr>
+inoremap <silent> <esc> <esc>:call <SID>EscapeInsert()<cr>
 
 augroup autoclose_single_quote
     autocmd!
@@ -32,7 +16,63 @@ augroup autoclose_single_angle_bracket
     autocmd FileType html inoremap <<cr> <<cr>><esc>O
 augroup END
 
-let g:opened_stack = []
+function! s:InitializeAutoClose()
+    let g:autoclose = 1
+    let g:visual_unmapped = 1
+    let g:opened_stack = []
+    call s:MapAll()
+endfunction
+
+function! s:MapAll()
+    if g:visual_unmapped
+        inoremap <c-j> <c-o>:call <SID>ControlJToEscape()<cr>
+        inoremap " "<c-o>:call <SID>DoubleQuote()<cr>
+        inoremap [<esc> [<esc>
+        inoremap [ [<c-o>:call <SID>OpenBracket()<cr>
+        inoremap ] <c-o>:call <SID>CloseBracket()<cr>
+        inoremap [<bs> <nop>
+        inoremap [<cr> [<cr>]<esc>O
+        inoremap {<esc> {<esc>
+        inoremap { {<c-o>:call <SID>OpenBrace()<cr>
+        inoremap } <c-o>:call <SID>CloseBrace()<cr>
+        inoremap {<bs> <nop>
+        inoremap {<cr> {<cr>}<esc>O
+        inoremap {<space> {<space><space>}<esc><left>i
+        inoremap (<esc> (<esc>
+        inoremap ( (<c-o>:call <SID>OpenParenthesis()<cr>
+        inoremap ) <c-o>:call <SID>CloseParenthesis()<cr>
+        inoremap (<bs> <nop>
+        inoremap (<cr> (<cr>)<esc>O
+        let g:visual_unmapped = 0
+    endif
+endfunction
+
+function! s:UnmapAll()
+    let g:visual_unmapped = 1
+    silent! iunmap <c-j>
+    silent! iunmap "
+    silent! iunmap [<esc>
+    silent! iunmap [
+    silent! iunmap ]
+    silent! iunmap [<bs>
+    silent! iunmap [<cr>
+    silent! iunmap {<esc>
+    silent! iunmap {
+    silent! iunmap }
+    silent! iunmap {<bs>
+    silent! iunmap {<cr>
+    silent! iunmap {<space>
+    silent! iunmap (<esc>
+    silent! iunmap (
+    silent! iunmap )
+    silent! iunmap (<bs>
+    silent! iunmap (<cr>
+endfunction
+
+function! s:EscapeInsert()
+    call s:ClearOpenedStack()
+    call s:MapAll()
+endfunction
 
 function! s:ClearOpenedStack()
     let g:opened_stack = []
@@ -164,3 +204,5 @@ function! s:CloseParenthesis()
         call feedkeys(")", 'n')
     endif
 endfunction
+
+call <SID>InitializeAutoClose()
