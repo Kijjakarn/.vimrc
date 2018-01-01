@@ -12,6 +12,31 @@ setlocal indentkeys+==in
 "     finish
 " endif
 
+let s:keyword_map_private =
+    \ [ ['do', 1]
+    \ , ['where', 1]
+    \ , ['in', 1]
+    \ , ['let', 1]
+    \ , ['if', -2]
+    \ , ['then', -4]
+    \ ]
+let s:symbol_map_private =
+    \ [ [' = ', 0]
+    \ ]
+
+let s:keywords = map(copy(s:keyword_map_private), 'v:val[0]')
+let s:symbols  = map(copy(s:symbol_map_private), 'v:val[0]')
+
+let s:indents = map(s:keyword_map_private, {k, v -> len(v[0]) + v[1]})
+let s:indents_with_symbols =
+    \ s:indents + map(s:symbol_map_private, {k, v -> len(v[0]) + v[1]})
+
+let s:keyword_regexes = map(copy(s:keywords), {k, v -> '\<' . v . '\>'})
+let s:keyword_and_symbol_regexes = s:keyword_regexes + s:symbols
+
+let s:previous_line_keyword_regexes =
+    \ '^.*\(' . join(s:keyword_regexes, '\|') . '\).*$'
+
 function! GetHaskellIndent(line_number)
     if a:line_number == 0
         return 0
@@ -20,6 +45,11 @@ function! GetHaskellIndent(line_number)
     let line = getline(a:line_number)
     let previous_line = getline(a:line_number - 1)
     let previous_indent = indent(a:line_number - 1)
+
+    " The previous line is a comment
+    if line =~# '^\s*--.*$'
+        return previous_indent
+    endif
 
     " `in` is at the beginning of the line
     if line =~# '^\s*in\>.*$'
@@ -53,9 +83,9 @@ function! GetHaskellIndent(line_number)
     " `data` or `newtype` is at the beginning of the previous line
     if previous_line =~# '^\s*\(data\|newtype\)\>.*$'
         " The previous line also contains `=`
-        let equals_index = stridx(previous_line, '=')
+        let equals_index = stridx(previous_line, ' = ')
         if equals_index >= 0
-            return equals_index
+            return equals_index + 1
         endif
 
         return previous_indent + 4
@@ -91,30 +121,45 @@ function! GetHaskellIndent(line_number)
         return strridx(previous_line, '{')
     endif
 
-    " `do`, `where`, `in`, or `let` is in the previous line
-    if previous_line =~# '^.*\<\(do\|where\|in\|let\)\>.*$'
+    " There is a keyword in the previous line
+    if previous_line =~# s:previous_line_keyword_regexes
         let line_number = a:line_number - 1
-        let do_position    = LastOccurrenceStartIndex(line_number, '\<do\>')
-        let where_position = LastOccurrenceStartIndex(line_number, '\<where\>')
-        let in_position    = LastOccurrenceStartIndex(line_number, '\<in\>')
-        let let_position   = LastOccurrenceStartIndex(line_number, '\<let\>')
-        let max_position = max([do_position, where_position, in_position, let_position])
-        if do_position == max_position
-            return do_position + 3
-        elseif where_position == max_position
-            return where_position + 6
-        elseif in_position == max_position
-            return in_position + 3
-        elseif let_position == max_position
-            return let_position + 4
-        endif
+        let indents = s:KeywordIndents(line_number)
+        let max_indent = max(indents)
+        let max_indent_index = index(indents, max_indent)
+        return max_indent + s:indents[max_indent_index]
     end
 
     return previous_indent
 endfunction
 
+function! s:KeywordIndents(line_number)
+    let indents = []
+    for word in s:keyword_regexes
+        call add(indents, LastOccurrenceStartIndex(a:line_number, word))
+    endfor
+    return indents
+endfunction
+
+function! HaskellIndentStops(line_number)
+    let stops = []
+    let index = 0
+    for word in s:keyword_and_symbol_regexes
+        let start_indexes =
+            \ AllOccurrencesStartIndex(getline(a:line_number), word)
+        for start_index in start_indexes
+            call add(stops, start_index + s:indents_with_symbols[index])
+        endfor
+        let index += 1
+    endfor
+    return stops
+endfunction
+
 function! NthOccurrenceStartIndex(n, haystack, needle)
     let n = a:n
+    if n < 0
+        return -1
+    endif
     let index = [0, 0, 0]
     while n >= 0
         let m = matchstrpos(a:haystack, a:needle, index[2])
@@ -126,6 +171,21 @@ function! NthOccurrenceStartIndex(n, haystack, needle)
         let n -= 1
     endwhile
     return index[1]
+endfunction
+
+function! AllOccurrencesStartIndex(haystack, needle)
+    let occurrences = []
+    let index = [0, 0, 0]
+    while index[1] >= 0
+        let m = matchstrpos(a:haystack, a:needle, index[2])
+        if m[1] >= 0
+            let index = m
+            call add(occurrences, m[1])
+        else
+            break
+        endif
+    endwhile
+    return occurrences
 endfunction
 
 function! LastOccurrenceStartIndex(line_number, pattern)

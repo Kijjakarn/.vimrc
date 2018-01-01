@@ -29,13 +29,25 @@ function! s:Backspace()
     let current_line_number = line('.')
     let current_line = getline(current_line_number)
     if current_line =~# '^\s\+$'
-        let current_indent = indent(current_line_number)
-        let line_number = current_line_number - 1
-        let indent = indent(line_number)
-        while current_indent <= indent && line_number >= 0
-            let line_number -= 1
+        if &ft == 'haskell'
+            let current_indent = indent(current_line_number)
+            let line_number = current_line_number - 1
+            let stops = sort(add(HaskellIndentStops(line_number), indent(line_number)), {x, y -> x - y})
+            let indent = SearchLessThan(stops, current_indent)
+            while current_indent == indent
+                let line_number -= 1
+                let stops = sort(add(HaskellIndentStops(line_number), indent(line_number)), {x, y -> x - y})
+                let indent = SearchLessThan(stops, current_indent)
+            endwhile
+        else
+            let current_indent = indent(current_line_number)
+            let line_number = current_line_number - 1
             let indent = indent(line_number)
-        endwhile
+            while current_indent <= indent && line_number >= 0
+                let line_number -= 1
+                let indent = indent(line_number)
+            endwhile
+        endif
         call setline(current_line_number, join(repeat([' '], indent), ''))
         call cursor(current_line_number, indent)
     else
@@ -55,6 +67,25 @@ function! s:Backspace()
         endif
         call feedkeys("\<BS>", 'n')
     endif
+endfunction
+
+" Assume `xs` is already sorted
+" Return the largest element in `xs` that is less than `x`
+function! SearchLessThan(xs, x)
+    let xs_length = len(a:xs)
+    if xs_length == 0
+        return a:x
+    endif
+    for index in range(xs_length)
+        if a:xs[index] >= a:x
+            if index > 0
+                return a:xs[index - 1]
+            else
+                return a:x
+            endif
+        endif
+    endfor
+    return a:xs[-1]
 endfunction
 
 function! s:MapAll()
