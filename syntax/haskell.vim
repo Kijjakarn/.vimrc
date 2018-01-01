@@ -16,7 +16,7 @@ syn match haskellOperator    "[+*/%><\\-]"
 syn match haskellOperator    "&\||\|`\|\$\|@\|?\|#\|!"
 syn match haskellBrace       "[][)(}{]"
 
-syn match haskellFloat       "\<\d\+\(\.\d*\)\?\([eE][+-]\?\d\+\>\)\?"
+syn match haskellFloat       "\<\d\+\(\.\d\+\)\?\([eE][+-]\?\d\+\>\)\?"
 syn match haskellHex         "0x\x*"
 syn match haskellSpecialChar "\\." contained
 
