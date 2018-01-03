@@ -15,6 +15,8 @@ set autoread
 
 set rtp+=~/.vim/ftdetect
 
+let g:tex_flavor = 'latex'
+
 " Plugins {{{
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
