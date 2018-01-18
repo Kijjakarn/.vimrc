@@ -79,7 +79,7 @@ hi Repeat          guifg=#F92672               gui=bold
 hi Search          guifg=#FFFFFF guibg=#455354
 " marks
 hi SignColumn      guifg=#A6E22E guibg=#232526
-hi SpecialChar     guifg=#F92672               gui=bold
+hi SpecialChar     guifg=#F92672
 hi SpecialComment  guifg=#7E8E91               gui=bold
 hi Special         guifg=#5FAFFF guibg=bg      gui=italic
 if has("spell")
@@ -195,7 +195,7 @@ if &t_Co > 255
 
    " marks column
    hi SignColumn      ctermfg=112 ctermbg=235
-   hi SpecialChar     ctermfg=161               cterm=bold
+   hi SpecialChar     ctermfg=161
    hi SpecialComment  ctermfg=245               cterm=bold
    hi Special         ctermfg=68
    if has("spell")
