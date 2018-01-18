@@ -32,7 +32,7 @@ syn region haskellBlockComment start="{-" end="-}"
 hi link haskellKeyword      Keyword
 hi link haskellType         Type
 hi link haskellOperator     Operator
-hi link haskellInfix        Operator
+hi link haskellInfix        Identifier
 hi link haskellIdentifier   Identifier
 hi link haskellBrace        Brace
 hi link haskellNumber       Number
